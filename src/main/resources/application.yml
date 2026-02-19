@@ -1,0 +1,34 @@
+constants:   # 커스텀 속성
+  jwt:
+    issuer: green502@green.com # JWT 토큰 발행자 정보
+    bearer-format: JWT
+    claim-key: signedUser
+    secret-key: DeaguGreenArtAcademyClass502MsaClassFighting # 비밀 레시피(절대 공개되어서는 안 된다)
+    access-token-cookie-name: access-token
+    access-token-cookie-path: /
+    access-token-cookie-validity-seconds: 1_296_000 # 15분
+    access-token-validity-milliseconds: 1_296_000_000 # 15분
+    refresh-token-cookie-name: refresh-token
+    refresh-token-cookie-path: /api/user/reissue
+    refresh-token-cookie-validity-seconds: 1_296_000 # 15일
+    refresh-token-validity-milliseconds: 1_296_000_000 # 15일
+  file:
+    directory: D:/test/download/greengram
+
+spring:
+  application:
+    name: greengram
+  datasource: # 데이터베이스 접속정보
+    url: jdbc:log4jdbc:mysql://localhost:3306/greengram
+    username: root
+    password: green502
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  servlet:
+    multipart:
+      max-file-size: 15MB
+
+mybatis: # Mybatis 세팅
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml # xml 파일 위치
+
