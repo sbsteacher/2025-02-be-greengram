@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 @Slf4j //로그
@@ -49,7 +49,12 @@ public class MyFileUtil {
     //랜덤파일명 + 확장자 리턴
     public String makeRandomFileName(MultipartFile mf) {
         String originalFileName = mf.getOriginalFilename();
+        return makeRandomFileName(originalFileName);
+    }
 
-        return null;
+    //MultipartFile 객체에 있는 파일을 원하는 위치로 저장
+    public void transferTo(MultipartFile mf, String targetPath) throws IOException {
+        File file = new File(fileUploadPath, targetPath);
+        mf.transferTo(file);
     }
 }

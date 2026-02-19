@@ -9,6 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserSignUpReq {
+    private long id;
     private String uid;
     private String upw;
     private String nm;
