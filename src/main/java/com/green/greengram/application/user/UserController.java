@@ -46,7 +46,7 @@ public class UserController {
         return new ResultResponse<>(userSignInRes == null ? "아이디/비밀번호를 확인해 주세요." : "로그인 성공", userSignInRes);
     }
 
-    @PostMapping("/signout")
+    @PostMapping("/sign-out")
     public ResultResponse<?> signOut(HttpServletResponse res) {
         jwtTokenManager.signOut(res);
         return new ResultResponse<>("로그아웃 성공", 1);
