@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -35,9 +37,15 @@ public class UserService {
             //String middlePath = String.format("user/%d", id);
             String middlePath = "user/" + id;
             //폴더 만들기
-
+            myFileUtil.makeFolders(middlePath);
 
             String fullFilePath = String.format("%s/%s", middlePath, savedPicFileName);
+
+            try {
+                myFileUtil.transferTo(mf, fullFilePath);
+            } catch (IOException e) {
+                e.printStackTrace(); //오류 메세지 콘솔에 출력
+            }
         }
 
         return result;
