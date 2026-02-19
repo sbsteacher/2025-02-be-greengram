@@ -25,7 +25,7 @@ public class UserController {
     * req는 파일을 제외한 데이터(uid, upw, nm 데이터들)
     * pic은 프로파일 이미지 파일
     *  */
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResultResponse<?> signUp(@RequestPart UserSignUpReq req
                                   , @RequestPart(required = false) MultipartFile pic
     ) {
@@ -34,7 +34,7 @@ public class UserController {
         return new ResultResponse<>("회원가입 성공", result);
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/sign-in")
     public ResultResponse<?> signIn(HttpServletResponse res, @RequestBody UserSignInReq req) {
         log.info("req: {}", req);
         UserSignInRes userSignInRes = userService.signIn(req);
