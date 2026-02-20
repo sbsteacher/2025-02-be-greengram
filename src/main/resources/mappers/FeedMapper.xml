@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.greengram.application.feed.FeedMapper">
-
+    <insert id="save" useGeneratedKeys="true" keyProperty="feedId">
+        INSERT INTO feed
+           SET location = #{location}
+             , contents = #{contents}
+             , user_id = #{signedUserId}
+    </insert>
 
 </mapper>
