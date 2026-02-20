@@ -8,4 +8,14 @@
              , user_id = #{signedUserId}
     </insert>
 
+
+    <insert id="savePics">
+        INSERT INTO feed_pic
+        ( feed_id, pic )
+        VALUES
+        <foreach collection="picSavedNames" item="v" separator=",">
+            ( #{feedId}, #{v} )
+        </foreach>
+    </insert>
+
 </mapper>

@@ -2,6 +2,7 @@ package com.green.greengram.application.feed;
 
 
 import com.green.greengram.application.feed.model.FeedPostReq;
+import com.green.greengram.application.feed.model.FeedPostRes;
 import com.green.greengram.configuration.model.ResultResponse;
 import com.green.greengram.configuration.model.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class FeedController {
         log.info("req: {}", req);
         log.info("pics.size(): {}", pics.size());
         req.setSignedUserId(userPrincipal.getSignedUserId());
-        feedService.postFeed(req, pics);
-        return null;
+        FeedPostRes res = feedService.postFeed(req, pics);
+        return new ResultResponse<>("success", res);
     }
 }
