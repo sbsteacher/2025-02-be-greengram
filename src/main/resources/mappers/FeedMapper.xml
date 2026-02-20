@@ -8,6 +8,19 @@
              , user_id = #{signedUserId}
     </insert>
 
+    <select id="findAll">
+        SELECT f.id, f.contents, f.location, f.created_at
+             , u.id AS writerUserId
+             , u.uid AS writerUid
+             , u.nm AS writerNickName
+             , u.pic AS writerPic
+          FROM feed f
+          JOIN user u
+            ON u.id = f.user_id
+         ORDER BY f.id DESC
+         LIMIT #{startIdx}, #{size}
+    </select>
+
 
     <insert id="savePics">
         INSERT INTO feed_pic
