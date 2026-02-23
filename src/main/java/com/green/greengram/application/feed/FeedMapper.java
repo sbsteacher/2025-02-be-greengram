@@ -17,5 +17,6 @@ public interface FeedMapper {
     int savePics(@Param("feedId") long feedId
                , @Param("picSavedNames") List<String> picSavedNames);
 
+    List<String> findPicsById(long feedId);
 
 }
