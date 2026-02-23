@@ -15,4 +15,12 @@
          WHERE uid = #{uid}
     </select>
 
+    <select id="findProfileUser">
+        SELECT u.id, u.pic, u.created_at, u.uid, u.nm
+             , count(DISTINCT f.id) AS feedCount
+          FROM user u
+          LEFT JOIN feed f
+            ON f.user_id = u.id
+         WHERE u.id = #{profileUserId}
+    </select>
 </mapper>
