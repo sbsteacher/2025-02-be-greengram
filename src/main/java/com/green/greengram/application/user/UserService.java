@@ -69,4 +69,35 @@ public class UserService {
     public UserProfileGetRes getProfileUser (UserProfileGetReq req) {
         return userMapper.findProfileUser(req);
     }
+
+    public String patchProfilePic(long signedUserId, MultipartFile pic) {
+        //기존 프로파일 사진은 삭제, 기존 파일명을 구해야 함.
+        UserGetOneRes res = userMapper.findById( signedUserId );
+        String folderPath = String.format("user/%d", signedUserId);
+
+        //파일 삭제 고고!!
+        String existedFilePath = String.format("%s/%s", folderPath, res.getPic());
+        myFileUtil.deleteFile(existedFilePath);
+
+        //폴더 생성
+        myFileUtil.makeFolders(folderPath);
+
+        //업로드 한 파일 원하는 위치로 이동
+        String saveFileName = myFileUtil.makeRandomFileName(pic); //저장시킬 파일명 만들었고
+        String saveFullFilePath = String.format("%s/%s", folderPath, saveFileName);
+
+        try {
+            myFileUtil.transferTo(pic, saveFullFilePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //DB 수정처리
+        UserUpdDto dto = UserUpdDto.builder()
+                                   .id(signedUserId)
+                                   .pic(saveFileName)
+                                   .build();
+        userMapper.updUser(dto);
+        return saveFileName;
+    }
 }

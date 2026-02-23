@@ -60,4 +60,12 @@ public class UserController {
         UserProfileGetRes res = userService.getProfileUser(req);
         return new ResultResponse<>("프로파일 유저 정보", res);
     }
+
+    @PatchMapping("/profile/pic")
+    public ResultResponse<?> patchProfileUserPic(@AuthenticationPrincipal UserPrincipal userPrincipal
+                                               , @RequestPart MultipartFile pic) {
+        String savedFileName = userService.patchProfilePic(userPrincipal.getSignedUserId(), pic);
+        return null;
+    }
+
 }

@@ -52,6 +52,13 @@ public class MyFileUtil {
         return makeRandomFileName(originalFileName);
     }
 
+    public void deleteFile(String path) {
+        File file = new File(fileUploadPath, path);
+        if(file.exists()) {
+            file.delete();
+        }
+    }
+
     //MultipartFile 객체에 있는 파일을 원하는 위치로 저장
     public void transferTo(MultipartFile mf, String targetPath) throws IOException {
         File file = new File(fileUploadPath, targetPath);

@@ -15,6 +15,12 @@
          WHERE uid = #{uid}
     </select>
 
+    <select id="findById">
+        SELECT id, uid, upw, nm, pic, created_at
+        FROM user
+        WHERE id = #{id}
+    </select>
+
     <select id="findProfileUser">
         SELECT u.id, u.pic, u.created_at, u.uid, u.nm
              , count(DISTINCT f.id) AS feedCount
@@ -23,4 +29,27 @@
             ON f.user_id = u.id
          WHERE u.id = #{profileUserId}
     </select>
+
+    <update id="updUser">
+        UPDATE user
+        <choose>
+            <when test="upw != null">
+                upw = #{upw}
+            </when>
+            <when test="nm != null">
+                nm = #{nm}
+            </when>
+            <when test="pic != null">
+                <choose>
+                    <when test=" pic == '' "> <!-- 빈문자열이 오면 사진 삭제 -->
+                        pic = null
+                    </when>
+                    <otherwise> <!-- pic 내용 수정 -->
+                        pic = #{pic}
+                    </otherwise>
+                </choose>
+            </when>
+        </choose>
+        WHERE id = #{id}
+    </update>
 </mapper>
