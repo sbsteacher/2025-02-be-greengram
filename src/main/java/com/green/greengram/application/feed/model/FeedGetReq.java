@@ -12,7 +12,7 @@ public class FeedGetReq {
     private Long profileUserId;
     private int startIdx;
 
-    public FeedGetReq(int page, int size, @BindParam("profile_user_id") Long profileUserId) {
+    public FeedGetReq(int page, int size, Long profileUserId) {
         this.page = page;
         this.size = size;
         this.profileUserId = profileUserId;

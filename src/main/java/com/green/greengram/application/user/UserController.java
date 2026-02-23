@@ -54,7 +54,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResultResponse<?> getProfileUser(@AuthenticationPrincipal UserPrincipal userPrincipal
-                                          , @RequestParam("profile_user_id") long profileUserId) {
+                                          , @RequestParam long profileUserId) {
         UserProfileGetReq req = new UserProfileGetReq( profileUserId, userPrincipal.getSignedUserId() );
         log.info("req: {}", req);
         UserProfileGetRes res = userService.getProfileUser(req);
