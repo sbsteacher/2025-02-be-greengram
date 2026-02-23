@@ -65,7 +65,7 @@ public class UserController {
     public ResultResponse<?> patchProfileUserPic(@AuthenticationPrincipal UserPrincipal userPrincipal
                                                , @RequestPart MultipartFile pic) {
         String savedFileName = userService.patchProfilePic(userPrincipal.getSignedUserId(), pic);
-        return null;
+        return new ResultResponse<>("프로파일 유저 사진 수정", savedFileName);
     }
 
 }
