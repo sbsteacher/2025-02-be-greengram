@@ -8,7 +8,6 @@ import tools.jackson.databind.ser.std.ToStringSerializer;
 
 @Configuration
 public class JacksonFormatConfiguration {
-
     @Bean
     public JsonMapperBuilderCustomizer jsonMapperBuilderCustomizer() {
         return builder -> {

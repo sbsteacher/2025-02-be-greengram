@@ -2,7 +2,6 @@ package com.green.greengram.application.feed.model;
 
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.web.bind.annotation.BindParam;
 
 @Getter
 @ToString
