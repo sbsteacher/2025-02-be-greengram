@@ -59,6 +59,25 @@ public class MyFileUtil {
         }
     }
 
+    // C:\Windows
+    // C:\Windows\appcompat
+    // C:\Windows\appcompat\appraiser
+    public void deleteDirectory(String fullPath) {
+        File directory = new File(fullPath);
+        if( directory.exists() && directory.isDirectory() ) {
+            File[] includedFiles = directory.listFiles(); //폴더 안에 있는 모든 파일들을 가져온다.
+
+            for( File file : includedFiles ) {
+                if( file.isDirectory() ) {
+                    deleteDirectory( file.getAbsolutePath() ); //재귀호출
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        directory.delete();
+    }
+
     //MultipartFile 객체에 있는 파일을 원하는 위치로 저장
     public void transferTo(MultipartFile mf, String targetPath) throws IOException {
         File file = new File(fileUploadPath, targetPath);

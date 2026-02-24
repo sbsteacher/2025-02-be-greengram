@@ -94,10 +94,23 @@ public class UserService {
 
         //DB 수정처리
         UserUpdDto dto = UserUpdDto.builder()
-                                   .id(signedUserId)
-                                   .pic(saveFileName)
+                                   .id( signedUserId )
+                                   .pic( saveFileName )
                                    .build();
         userMapper.updUser(dto);
         return saveFileName;
+    }
+
+    public void deleteProfilePic(long signedUserId) {
+        //폴더 째로 삭제
+        String absolutePath = String.format("%s/user/%d", myFileUtil.fileUploadPath, signedUserId);
+        myFileUtil.deleteDirectory( absolutePath );
+
+        //user테이블의 해당 row의 pic 컬럼의 값을 null로 변경
+        UserUpdDto dto = UserUpdDto.builder()
+                                   .id( signedUserId )
+                                   .pic( "" )
+                                   .build();
+        userMapper.updUser(dto);
     }
 }
