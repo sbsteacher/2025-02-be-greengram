@@ -14,9 +14,20 @@
              , u.uid AS writerUid
              , u.nm AS writerNickName
              , u.pic AS writerPic
+             , fl.feed_id IS NOT NULL AS isLike
+             , IFNULL(flc.likeCount, 0) AS likeCount
           FROM feed f
           JOIN user u
             ON u.id = f.user_id
+          LEFT JOIN feed_like AS fl
+            ON fl.feed_id = f.id
+           AND fl.user_id = #{signedUserId}
+          LEFT JOIN (
+                SELECT feed_id, COUNT(feed_id) AS likeCount
+                FROM feed_like
+                GROUP BY feed_id
+             ) AS flc
+            ON flc.feed_id = f.id
          <if test=" profileUserId != null and profileUserId > 0 ">
             WHERE f.user_id = #{profileUserId}
          </if>

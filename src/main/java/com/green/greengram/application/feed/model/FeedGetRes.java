@@ -19,7 +19,7 @@ public class FeedGetRes {
     private String writerUid;
     private String writerNickName;
     private String writerPic;
-    private int isLike; //X
-    private int likeCount; //X
+    private int isLike; //내가 이 FEED를 좋아요를 했나? 했으면 1 아니면 0
+    private int likeCount; //해당 피드에 좋아요 한 수
     private List<String> pics = new ArrayList<>();
 }

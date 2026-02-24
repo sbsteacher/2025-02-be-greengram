@@ -34,7 +34,9 @@ public class FeedController {
     }
 
     @GetMapping
-    public ResultResponse<?> getFeedList( @ModelAttribute FeedGetReq req ) {
+    public ResultResponse<?> getFeedList(@AuthenticationPrincipal UserPrincipal userPrincipal
+                                       , @ModelAttribute FeedGetReq req ) {
+        req.setSignedUserId( userPrincipal.getSignedUserId() );
         log.info( "req: {}", req );
         List<FeedGetRes> list = feedService.getFeedList(req);
         return new ResultResponse<>("success", list);
