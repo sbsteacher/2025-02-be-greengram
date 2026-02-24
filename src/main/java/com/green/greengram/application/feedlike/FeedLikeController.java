@@ -23,6 +23,7 @@ public class FeedLikeController {
                                           , @RequestBody FeedLikeReq req) {
         req.setSignedUserId( userPrincipal.getSignedUserId() );
         log.info("req: {}", req);
-        return null;
+        boolean result = feedLikeService.toggleFeedLike( req );
+        return new ResultResponse<>(result ? "좋아요 처리" : "좋아요 취소", result);
     }
 }
