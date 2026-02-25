@@ -26,6 +26,8 @@
              , count(DISTINCT f.id) AS feedCount
              , COUNT(DISTINCT ff.from_user_id, ff.to_user_id) AS followingCount
              , COUNT(DISTINCT tf.from_user_id, tf.to_user_id) AS followerCount
+             , MAX(DISTINCT if(tf.from_user_id = #{signedUserId}, 1, 0))
+             + MAX(DISTINCT if(ff.to_user_id = #{signedUserId}, 2, 0)) AS followState
           FROM user u
           LEFT JOIN feed f
             ON f.user_id = u.id
