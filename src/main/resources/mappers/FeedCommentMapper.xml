@@ -7,4 +7,15 @@
              , user_id = #{signedUserId}
              , comment = #{comment}
     </insert>
+
+    <select id="findAll">
+        SELECT fc.id, fc.feed_id, fc.`comment`
+             , u.id AS writerUserId, u.nm AS writerNm, u.pic AS writerPic
+          FROM feed_comment fc
+          JOIN user u
+            ON u.id = fc.user_id
+         WHERE fc.feed_id = #{feedId}
+         ORDER BY fc.id DESC
+         LIMIT #{startIdx}, #{size}
+    </select>
 </mapper>
