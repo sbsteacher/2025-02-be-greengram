@@ -1,5 +1,7 @@
 package com.green.greengram.application.feedcomment;
 
+import com.green.greengram.application.feedcomment.model.FeedCommentGetReq;
+import com.green.greengram.application.feedcomment.model.FeedCommentGetRes;
 import com.green.greengram.application.feedcomment.model.FeedCommentPostReq;
 import com.green.greengram.configuration.model.ResultResponse;
 import com.green.greengram.configuration.model.UserPrincipal;
@@ -8,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -24,5 +28,12 @@ public class FeedCommentController {
         log.info("req: {}", req);
         long feedCommentId = feedCommentService.postFeedComment( req );
         return new ResultResponse<>("댓글 등록 완료", feedCommentId);
+    }
+
+    @GetMapping
+    public ResultResponse<?> getFeedCommentList(@ModelAttribute FeedCommentGetReq req) {
+        log.info("req: {}", req);
+        List<FeedCommentGetRes> list = feedCommentService.getFeedCommentList(req);
+        return new ResultResponse<>(String.format("%d rows", list.size()), list);
     }
 }
