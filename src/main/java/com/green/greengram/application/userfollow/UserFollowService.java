@@ -14,4 +14,8 @@ public class UserFollowService {
     public int postUserFollow(UserFollowReq req) {
         return userFollowMapper.save(req);
     }
+
+    public int deleteUserFollow(UserFollowReq req) {
+        return userFollowMapper.delete(req);
+    }
 }

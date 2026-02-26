@@ -6,10 +6,7 @@ import com.green.greengram.configuration.model.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -25,5 +22,14 @@ public class UserFollowController {
         log.info("req: {}", req);
         int result = userFollowService.postUserFollow(req);
         return new ResultResponse<>("팔로우 등록", result);
+    }
+
+    @DeleteMapping
+    public ResultResponse<?> deleteUserFollow(@AuthenticationPrincipal UserPrincipal userPrincipal
+                                          , @ModelAttribute UserFollowReq req) {
+        req.setFromUserId( userPrincipal.getSignedUserId() );
+        log.info("req: {}", req);
+        int result = userFollowService.deleteUserFollow(req);
+        return new ResultResponse<>("팔로우 취소", result);
     }
 }
