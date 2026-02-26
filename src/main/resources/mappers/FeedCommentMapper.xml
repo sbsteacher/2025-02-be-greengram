@@ -18,4 +18,10 @@
          ORDER BY fc.id DESC
          LIMIT #{startIdx}, #{size}
     </select>
+
+    <delete id="delete">
+        DELETE FROM feed_comment
+         WHERE id = #{feedCommentId}
+           AND user_id = #{signedUserId}
+    </delete>
 </mapper>

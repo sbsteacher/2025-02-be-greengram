@@ -1,5 +1,6 @@
 package com.green.greengram.application.feedcomment;
 
+import com.green.greengram.application.feedcomment.model.FeedCommentDeleteReq;
 import com.green.greengram.application.feedcomment.model.FeedCommentGetReq;
 import com.green.greengram.application.feedcomment.model.FeedCommentGetRes;
 import com.green.greengram.application.feedcomment.model.FeedCommentPostReq;
@@ -23,5 +24,9 @@ public class FeedCommentService {
     public List<FeedCommentGetRes> getFeedCommentList(FeedCommentGetReq req) {
         List<FeedCommentGetRes> commentList = feedCommentMapper.findAll(req);
         return commentList;
+    }
+
+    public int deleteFeedComment(FeedCommentDeleteReq req) {
+        return feedCommentMapper.delete(req);
     }
 }
