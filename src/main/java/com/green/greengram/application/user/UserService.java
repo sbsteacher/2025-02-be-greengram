@@ -4,9 +4,11 @@ import com.green.greengram.application.user.model.*;
 import com.green.greengram.configuration.util.MyFileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -50,9 +52,10 @@ public class UserService {
 
     public UserSignInRes signIn(UserSignInReq req) {
         UserGetOneRes res = userMapper.findByUid( req.getUid() );
+
         log.info("res: {}", res);
-        if(!passwordEncoder.matches(req.getUpw(), res.getUpw())) {
-            return null;
+        if(res == null || !passwordEncoder.matches(req.getUpw(), res.getUpw())) { //비밀번호가 맞지 않으면?
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디, 비밀번호를 확인해 주세요.");
         }
         //로그인 성공!! 예전에는 AT, RT을 FE전달  >>> 보안 쿠키 이용
 //        JwtUser jwtUser = new JwtUser(res.getId());

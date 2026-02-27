@@ -27,6 +27,11 @@ spring:
     multipart:
       max-file-size: 15MB
 
+logging:
+  level:
+    jdbc.connection : INFO
+    com.zaxxer.hikari.HikariDataSource: INFO
+
 mybatis: # Mybatis 세팅
   configuration:
     map-underscore-to-camel-case: true

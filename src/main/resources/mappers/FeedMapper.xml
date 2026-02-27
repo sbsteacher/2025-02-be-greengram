@@ -61,8 +61,6 @@
            AND f.user_id = #{signedUserId}
     </delete>
 
-
-
     <insert id="savePics">
         INSERT INTO feed_pic
         ( feed_id, pic )

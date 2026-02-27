@@ -6,6 +6,7 @@ import com.green.greengram.application.feedcomment.model.FeedCommentGetRes;
 import com.green.greengram.application.feedcomment.model.FeedCommentPostReq;
 import com.green.greengram.configuration.model.ResultResponse;
 import com.green.greengram.configuration.model.UserPrincipal;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
@@ -33,7 +34,7 @@ public class FeedCommentController {
     }
 
     @GetMapping
-    public ResultResponse<?> getFeedCommentList(@ModelAttribute FeedCommentGetReq req) {
+    public ResultResponse<?> getFeedCommentList(@ModelAttribute @Valid FeedCommentGetReq req) {
         log.info("req: {}", req);
         List<FeedCommentGetRes> list = feedCommentService.getFeedCommentList(req);
         return new ResultResponse<>(String.format("%d rows", list.size()), list);
