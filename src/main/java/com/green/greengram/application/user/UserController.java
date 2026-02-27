@@ -6,6 +6,7 @@ import com.green.greengram.configuration.model.ResultResponse;
 import com.green.greengram.configuration.model.UserPrincipal;
 import com.green.greengram.configuration.security.JwtTokenManager;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/sign-in")
-    public ResultResponse<?> signIn(HttpServletResponse res, @RequestBody UserSignInReq req) {
+    public ResultResponse<?> signIn(HttpServletResponse res, @RequestBody @Valid UserSignInReq req) {
         log.info("req: {}", req);
         UserSignInRes userSignInRes = userService.signIn(req);
         //보안 쿠키 처리

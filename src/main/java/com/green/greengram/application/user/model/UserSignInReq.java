@@ -16,8 +16,7 @@ public class UserSignInReq {
     @NotNull(message = "아이디는 필수입니다.")
     private String uid;
 
-    @Size(min=10, max=20, message = "비밀번호는 4~20자 사이만 가능합니다.")
     @NotNull(message = "비밀번호는 필수입니다.")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&amp;*()_+\\-=\\[\\]{};':&quot;\\\\|,.&lt;&gt;\\/?])[A-Za-z\\d!@#$%^&amp;*()_+\\-=\\[\\]{};':&quot;\\\\|,.&lt;&gt;\\/?]{10,}$", message = "비밀번호는 영문자, 숫자, 특수기호로 구성되며 10자 이상이어야 합니다")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{10,20}$", message = "비밀번호는 영문자, 숫자, 특수기호로 구성되며 10~20자 사이만 가능합니다")
     private String upw;
 }
