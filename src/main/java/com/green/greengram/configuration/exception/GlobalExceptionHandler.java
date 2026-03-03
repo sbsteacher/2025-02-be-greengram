@@ -1,6 +1,7 @@
 package com.green.greengram.configuration.exception;
 
 import com.green.greengram.configuration.model.ResultResponse;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +51,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         String statusMessage = HttpStatus.valueOf(ex.getStatusCode().value()).getReasonPhrase();
 
-        return ResponseEntity
-                .status(ex.getStatusCode())
-                .body(new ResultResponse<>(statusMessage, ex.getReason()));
+        return ResponseEntity.status(ex.getStatusCode())
+                             .body(new ResultResponse<>(statusMessage, ex.getReason()));
+    }
+
+    //토큰에 무슨 문제가 발생되었을 때.
+    @ExceptionHandler({MalformedJwtException.class, SignatureException.class})
+    public ResponseEntity<Object> handleMalformedJwtException() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                             .body(new ResultResponse<>("토큰을 확인해 주세요.", null));
     }
 
     private List<ValidationError> getValidationError(BindException e) {
