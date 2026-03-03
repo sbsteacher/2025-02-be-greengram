@@ -1,5 +1,6 @@
 package com.green.greengram.configuration.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,10 +30,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         //쿠키에 AT가 있었다 주소값이 넘어온다.
         Authentication authentication = jwtTokenManager.getAuthentication(request);
         log.info("authentication: {}", authentication);
-        if (authentication != null) {  //로그인 상태
-            SecurityContextHolder.getContext().setAuthentication(authentication); //시큐리티 인증처리가 완료!!
-        } else {
-            request.setAttribute("exception", new MalformedJwtException("토큰 확인"));
+        try {
+            if (authentication != null) {  //로그인 상태
+                SecurityContextHolder.getContext().setAuthentication(authentication); //시큐리티 인증처리가 완료!!
+            } else {
+                request.setAttribute("exception", new MalformedJwtException("토큰 확인"));
+            }
+        } catch (Exception e) {
+            request.setAttribute("exception", e);
         }
 
         //다음 필터에게 req, res 전달

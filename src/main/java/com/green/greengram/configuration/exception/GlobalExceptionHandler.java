@@ -1,6 +1,7 @@
 package com.green.greengram.configuration.exception;
 
 import com.green.greengram.configuration.model.ResultResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +62,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                              .body(new ResultResponse<>("토큰을 확인해 주세요.", null));
     }
+
+    @ExceptionHandler(ExpiredJwtException.class) //토큰이 만료가 되었을 때
+    public ResponseEntity<Object> handleExpiredJwtException() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ResultResponse<>("토큰을 확인해 주세요.", null));
+    }
+
 
     private List<ValidationError> getValidationError(BindException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
