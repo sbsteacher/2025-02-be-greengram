@@ -5,6 +5,7 @@ import com.green.greengram.configuration.model.JwtUser;
 import com.green.greengram.configuration.model.ResultResponse;
 import com.green.greengram.configuration.model.UserPrincipal;
 import com.green.greengram.configuration.security.JwtTokenManager;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class UserController {
 
     @PostMapping("/sign-in")
     public ResultResponse<?> signIn(HttpServletResponse res, @RequestBody @Valid UserSignInReq req) {
-        log.info("req: {}", req);
+        log.info("sign-in ================= req: {}", req);
         UserSignInRes userSignInRes = userService.signIn(req);
         //보안 쿠키 처리
         if(userSignInRes != null) {
@@ -51,6 +52,12 @@ public class UserController {
     public ResultResponse<?> signOut(HttpServletResponse res) {
         jwtTokenManager.signOut(res);
         return new ResultResponse<>("로그아웃 성공", 1);
+    }
+
+    @PostMapping("/reissue")
+    public ResultResponse<?> reissue(HttpServletResponse res, HttpServletRequest req) {
+        jwtTokenManager.reissue(req, res);
+        return new ResultResponse<>("AT 재발행", null);
     }
 
     @GetMapping("/profile")

@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(new ResultResponse<>(sb.toString(), errors.toString()));
     }
 
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ResultResponse<String>> handleResponseStatusException(ResponseStatusException ex) {
+        log.error("ResponseStatusException: {}", ex.getReason());
+
+        String statusMessage = HttpStatus.valueOf(ex.getStatusCode().value()).getReasonPhrase();
+
+        return ResponseEntity
+                .status(ex.getStatusCode())
+                .body(new ResultResponse<>(statusMessage, ex.getReason()));
+    }
+
     private List<ValidationError> getValidationError(BindException e) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
 
@@ -50,5 +63,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return result;
         //return fieldErrors.stream().map(item -> ValidationError.of(item)).toList();
     }
+
 
 }
