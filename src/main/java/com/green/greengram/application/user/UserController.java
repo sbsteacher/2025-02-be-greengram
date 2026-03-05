@@ -26,6 +26,7 @@ public class UserController {
     * 다르게 받아야 한다. @RequestPart로 받아야 한다.
     * req는 파일을 제외한 데이터(uid, upw, nm 데이터들)
     * pic은 프로파일 이미지 파일
+    * required = false 속성이 없다면 반드시 요청 때 Data를 보내주어야 한다.
     *  */
     @PostMapping("/sign-up")
     public ResultResponse<?> signUp(@RequestPart UserSignUpReq req

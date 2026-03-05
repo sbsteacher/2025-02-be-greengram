@@ -31,6 +31,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests( req -> req.requestMatchers("/api/feed"
                                                                  , "/api/feed/comment"
                                                                  , "/api/feed/like"
+                                                                 , "/api/user/profile"
                                                                  , "/api/user/profile/pic").authenticated()
                                                   .anyRequest().permitAll() //나머지 요청에 대해서는 허용하겠다.
                 )
