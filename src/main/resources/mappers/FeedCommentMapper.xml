@@ -9,7 +9,7 @@
     </insert>
 
     <select id="findAll">
-        SELECT fc.id, fc.feed_id, fc.`comment`
+        SELECT fc.id, fc.feed_id, fc.`comment`, fc.created_at
              , u.id AS writerUserId, u.nm AS writerNm, u.pic AS writerPic
           FROM feed_comment fc
           JOIN user u
